@@ -7,6 +7,7 @@ import org.Kader.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,7 @@ public class PersonController {
 	private PersonRepository personRepository;
 	
 	@PostMapping("/addPerson")
-	public String addPerson(List<Person> persons) {
+	public String addPerson(@RequestBody List<Person> persons) {
 		personRepository.saveAll(persons);
 		return "records inserted "+persons.size();	
 	}
