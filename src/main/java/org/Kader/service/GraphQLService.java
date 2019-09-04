@@ -1,7 +1,8 @@
-package org.Kader.service;
+/*package org.Kader.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
@@ -11,14 +12,17 @@ import org.Kader.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Service;
 
 import graphql.GraphQL;
+import graphql.schema.DataFetcher;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.RuntimeWiring;
 import graphql.schema.idl.SchemaGenerator;
 import graphql.schema.idl.SchemaParser;
 import graphql.schema.idl.TypeDefinitionRegistry;
 
+@Service
 public class GraphQLService {
 	
 		@Value("classpath:person.graphql")
@@ -28,8 +32,10 @@ public class GraphQLService {
 		
 		@Autowired
 		private AllPersonDataFetcher getAllPersonsDataFetcher;
+		
 		@Autowired
 		private PersonDataFetcher findPersonDataFetcher;
+		
 		@Autowired
 		private PersonRepository personRepository;
 	
@@ -62,10 +68,19 @@ public class GraphQLService {
 
 
 		private RuntimeWiring buildRuntimeWiring() {
+			@SuppressWarnings("unused")
+			DataFetcher<List<Person>>fetcher1=data->{
+				          return (List<Person>)personRepository.findAll();
+				          };
+			@SuppressWarnings("unused")
+			DataFetcher<Person>fetcher2=data->{
+					          return personRepository.findByEmail(data.getArgument("email"));
+					          };		          
+		
 			return RuntimeWiring.newRuntimeWiring()
 					            .type("Query", typeWiring->typeWiring
-					                          .dataFetcher("getAllPersons", getAllPersonsDataFetcher)
-					                          .dataFetcher("findPerson", findPersonDataFetcher))           
+					                          .dataFetcher("getAllPersons", fetcher1)
+					                          .dataFetcher("findPerson", fetcher2))           
 					            .build();
 		}
 		
@@ -76,3 +91,4 @@ public class GraphQLService {
 	
 
 }
+*/

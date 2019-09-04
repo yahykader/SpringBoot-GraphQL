@@ -4,7 +4,7 @@ schema{
 
 typeQuery{
 	getAllPersons:[Person]
-	findPerson(email:String):Person
+	findPerson(email: String) : Person
 }
 
 typePerson{
